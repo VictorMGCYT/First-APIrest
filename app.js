@@ -1,17 +1,30 @@
 import express from 'express'
-import fs from 'fs';
 import crypto from 'crypto'
-import { validarSchem, validateParcialMovie } from './schems/movie.js';
-import { error } from 'console';
+import { validarSchem, validateParcialMovie } from './schems/movie.js'; 
+import cors from 'cors';
+// todo Ya está aprovada, creo
+// import movies from './movies.json' with {type: 'json'}
 
-const movies = JSON.parse(fs.readFileSync('./movies.json', 'utf-8'));
+
+// import fs from 'fs';
+// const movies = JSON.parse(fs.readFileSync('./movies.json', 'utf-8'));
 
 
 const app = express();
 app.disable('x-powered-by');
 const PORT = process.env.PORT ?? 1234
 
-const ACCEPED_ORIGINS = ['http://localhost:8080', 'http://localhost:8081']
+app.use(cors({
+    origin: (origin, callback) => {
+        const ACCEPED_ORIGINS = ['http://localhost:8080', 'http://localhost:8081']
+
+        if(ACCEPED_ORIGINS.includes(origin) || !origin) {
+            return callback(null, true)
+        }
+
+        return callback(new Error('No permitido por CORS'))
+    }
+}));
 
 // Express middleware para que puedan funcionar las solicitudes POST que contengan un JSON
 app.use(express.json());
@@ -22,10 +35,6 @@ app.get('/', (req, res) => {
 
 app.get('/movies', (req, res) => {
 
-    const origin = req.header('origin');
-    if (ACCEPED_ORIGINS.includes(origin)) {
-        res.header('Access-Control-Allow-Origin', origin)
-    }
 
     const {genre} = req.query;
 
@@ -116,16 +125,8 @@ app.patch( '/movies/:id', (req, res) => {
 
 })
 
-app.options('/movies/:id', (req, res) => {
-    res.header('Access-Control-Allow-Origin', 'http://localhost:8080')
-    res.header('Access-Control-Allow-Methods', 'POST, GET, PATCH, DELETE')
-    res.header('Access-Control-Allow-Headers', 'Content-Type')
-    res.send(200)
-})
 
 app.delete('/movies/:id', (req, res) => {
-    res.header('Access-Control-Allow-Origin', 'http://localhost:8080')
-    res.header('Access-Control-Allow-Methods', 'POST, GET, PATCH, DELETE')
     const {id} = req.params;
 
     const movieIndex = movies.findIndex( movie => movie.id === id)
