@@ -2,7 +2,7 @@
 import cors from 'cors';
 
 
-export const middlewareCors = () => cors({
+const middlewareCors = () => cors({
     origin: (origin, callback) => {
         const ACCEPED_ORIGINS = ['http://localhost:8080', 'http://localhost:8081']
 
@@ -13,3 +13,6 @@ export const middlewareCors = () => cors({
         return callback(new Error('No permitido por CORS'))
     }
 })
+
+// Exportamos el middleware de CORS
+export { middlewareCors }
