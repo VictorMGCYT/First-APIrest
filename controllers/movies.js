@@ -1,4 +1,5 @@
-import { MovieModel } from "../models/local-file-system/movie.js";
+// import { MovieModel } from "../models/local-file-system/movie.js";
+import { MovieModel } from '../models/mysql/movie.js'
 import {validarSchem, validateParcialMovie} from '../schems/movie.js'
 
 class MoviesController {

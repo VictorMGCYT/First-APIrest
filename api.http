@@ -13,8 +13,8 @@ POST http://localhost:1234/movies
 Content-Type: application/json
 
 {
-    "title": "Dora",
-    "year": 2018,
+    "title": "Shrek",
+    "year": 2004,
     "director": "Dreamworks",
     "duration": 120,
     "poster": "https://m.media-amazon.com/images/I/91Rc8cAmnAL._AC_UF1000,1000_QL80_.jpg",
