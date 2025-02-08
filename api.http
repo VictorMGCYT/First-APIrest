@@ -32,4 +32,4 @@ Content-Type: application/json
 }
 
 ###Eliminar una película
-DELETE http://localhost:1234/movies/dcdd0fad-a94c-4810-8acc-5f108d3b18c3
+DELETE http://localhost:1234/movies/f4020209-b12c-428c-82f3-2310ea86e668

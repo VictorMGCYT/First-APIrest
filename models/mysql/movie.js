@@ -63,6 +63,20 @@ class MovieModel {
 
     static async deleteMovie({id}){
 
+        const [movie, tableInfo] = await connection.query(
+            `SELECT title, year, director, duration, poster, rate, BIN_TO_UUID(id) id FROM movie WHERE id = UUID_TO_BIN(?);`,
+            [id]
+        )
+
+        if(movie.length === 0) return false;
+
+        await connection.query(
+            `DELETE FROM movie WHERE id = UUID_TO_BIN(?);`,
+            [id]
+        )
+
+        return true;
+
     }
 
 
