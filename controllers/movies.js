@@ -15,7 +15,7 @@ class MoviesController {
         res.json(movies)
     }
 
-    // Control para una pelicula en particular
+    // Control para buscar una pelicula en particular
     static async getById(req, res) {
         const {id} = req.params;
         
